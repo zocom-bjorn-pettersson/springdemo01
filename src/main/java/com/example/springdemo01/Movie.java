@@ -1,5 +1,7 @@
 package com.example.springdemo01;
 
+// Uppgift: Lägg till mer information om filmen. Kanske en regissör, vilket år den kom ut, och i vilket land.
+
 public class Movie {
     private int id;
     private int rating;
