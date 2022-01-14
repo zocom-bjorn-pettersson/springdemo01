@@ -30,7 +30,7 @@ public class MovieController {
         }
     */
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public Movie getGreeting(@RequestBody Movie movie) {
+    public Movie createMovie(@RequestBody Movie movie) {
         // Öka ID:t med 1 innan vi lägger in filmen
         // I verkligheten senare så görs detta automatiskt av en databas
         latestMovieID++;
