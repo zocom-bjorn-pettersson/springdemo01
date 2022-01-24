@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Min filmdatabas</title>
+
+        <script src="js/jquery-3.6.0.min.js"></script>
+
+        <!-- Här importerar vi en JS-fil som vi skrivit själva. -->
+        <script src="js/min-scriptfil.js"></script>
+    </head>
+    <body>
+        <h1>Filmer</h1>
+        <p id="movie-text"></p>
+        <ul id="movies"></ul>
+        <h2>Lägg till ny film</h2>
+        <!-- https://www.w3schools.com/html/html_forms.asp -->
+        <form id="create_movie">
+            Title:
+            <input name="title">
+            Rating:
+            <input name="rating">
+            <button type="submit">Lägg till film</button>
+        </form>
+    </body>
+</html>
