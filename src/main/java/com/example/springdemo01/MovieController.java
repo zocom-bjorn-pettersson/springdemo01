@@ -1,5 +1,8 @@
 package com.example.springdemo01;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,28 +33,47 @@ public class MovieController {
         }
     */
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public Movie createMovie(@RequestBody Movie movie) {
-        // Öka ID:t med 1 innan vi lägger in filmen
-        // I verkligheten senare så görs detta automatiskt av en databas
-        latestMovieID++;
-        movie.setId(latestMovieID);
-        myMovies.add(movie);
-        return movie;
+    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+        if (movie.getTitle() == "") {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        } else {
+            // Öka ID:t med 1 innan vi lägger in filmen
+            // I verkligheten senare så görs detta automatiskt av en databas
+            latestMovieID++;
+            movie.setId(latestMovieID);
+            myMovies.add(movie);
+            System.out.println("Lade till en film: " + movie.getTitle());
+            return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
+        }
+    }
+
+    @RequestMapping(value = "clear", method = RequestMethod.DELETE)
+    public void clearMovies() {
+        myMovies.clear();
+        System.out.println("Rensade listan av filmer");
     }
 
     // CRUD - Read
     // Lista alla filmer
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ArrayList<Movie> listMovies() {
+        System.out.println("Nu skickas listan av filmer till vår klient.");
         return myMovies;
     }
 
     // CRUD - Read
     // Lista en specifik film
     @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
-    public Movie listMovies(@PathVariable("id") int id) {
+    public ResponseEntity<Movie> getMovie(@PathVariable("id") int id) {
         System.out.println("Getting movie with id " + id);
-        return getMovieByID(id);
+
+        Movie fetchedMovie = getMovieByID(id);
+
+        if (fetchedMovie == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Movie>(fetchedMovie, HttpStatus.OK);
     }
 
     // CRUD - Update
@@ -93,7 +115,7 @@ public class MovieController {
             }
         }
 
-        return new Movie();
+        return null;
     }
 
     // Get a movie with a specific ID
