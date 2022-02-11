@@ -22,7 +22,7 @@
     <name>springdemo01</name>
     <description>springdemo01</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
